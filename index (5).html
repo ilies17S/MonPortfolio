@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Ilies Idbaia - BTS SIO SLAM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.95);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --terminal: #1e293b;
+            --neon: #00f2ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0f172a;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at 0% 0%, #1e1b4b 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, #2e1065 0%, transparent 50%);
+            background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+            z-index: -1;
+        }
+
+        nav {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 5%;
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .logo { font-family: 'Source Code Pro', monospace; font-weight: 800; font-size: 1.4rem; color: white; cursor: pointer; }
+        .logo span { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+        .nav-links { display: flex; list-style: none; align-items: center; }
+        .nav-links li { margin-left: 1.5rem; }
+        .nav-links a { 
+            color: rgba(255, 255, 255, 0.7); 
+            text-decoration: none; font-size: 0.85rem; font-weight: 700; 
+            text-transform: uppercase; transition: 0.3s;
+            cursor: pointer;
+            font-family: 'Source Code Pro', monospace;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
+
+        section { 
+            display: block; 
+            padding: 100px 8% 60px; 
+            max-width: 1200px; 
+            margin: auto; 
+            min-height: 30vh;
+        }
+
+        h2 { 
+            font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem; 
+            color: #fff; text-align: center; 
+            text-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+            font-family: 'Source Code Pro', monospace;
+        }
+        
+        h2::before { content: "> "; color: var(--primary); }
+
+        .card { 
+            background: var(--glass); backdrop-filter: blur(10px);
+            padding: 2.5rem; border-radius: 12px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1); 
+            margin-bottom: 2rem;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+            background: rgba(99, 102, 241, 0.1);
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan { from { top: 0; } to { top: 100%; } }
+
+        .card:hover { transform: translateY(-5px); border-color: var(--secondary); box-shadow: 0 0 30px rgba(168, 85, 247, 0.2); }
+
+        .btn-cv {
+            display: inline-block;
+            background: transparent;
+            color: var(--primary);
+            padding: 12px 30px;
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 800;
+            font-family: 'Source Code Pro', monospace;
+            margin-top: 25px;
+            transition: 0.3s;
+        }
+        .btn-cv:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 20px var(--primary);
+        }
+
+        .school-info { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; }
+        .school-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); font-family: 'Source Code Pro', monospace; }
+        .badge { background: var(--dark); color: var(--primary); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; font-family: 'Source Code Pro', monospace; }
+        
+        .grid-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .grid-item { 
+            background: rgba(15, 23, 42, 0.05); 
+            padding: 15px; border-radius: 8px; font-size: 0.95rem; 
+            border-left: 5px solid var(--primary);
+            font-family: 'Source Code Pro', monospace;
+        }
+        .grid-item strong { color: var(--dark); display: block; margin-bottom: 5px; font-size: 1rem; }
+
+        .project-card { border: 1px solid var(--secondary) !important; }
+        .tag { background: var(--dark); color: var(--secondary); border: 1px solid var(--secondary); padding: 2px 10px; border-radius: 4px; font-size: 0.7rem; margin-right: 5px; font-family: 'Source Code Pro', monospace; }
+
+        .contact-container { display: flex; justify-content: center; }
+        .contact-card { width: 100%; max-width: 500px; border: 1px solid #fff; }
+        .contact-card p { font-family: 'Source Code Pro', monospace; margin-bottom: 15px; }
+
+        footer { 
+            background: #020617; color: white; text-align: center; padding: 4rem; margin-top: 60px; 
+            border-top: 2px solid var(--primary);
+        }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--dark); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+
+        .module-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(99,102,241,0.08);
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 8px;
+            padding: 12px 18px;
+            text-decoration: none;
+            transition: background 0.2s;
+            margin-bottom: 8px;
+        }
+        .module-row:hover { background: rgba(99,102,241,0.18); }
+        .module-row-label {
+            color: var(--dark);
+            font-size: 0.88rem;
+            font-family: 'Source Code Pro', monospace;
+            text-align: left;
+        }
+        .module-row-label i { color: var(--primary); margin-right: 8px; }
+        .module-score {
+            color: white;
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            white-space: nowrap;
+            margin-left: 14px;
+        }
+        .score-100 { background: var(--primary); }
+        .score-97  { background: var(--primary); }
+        .score-93  { background: var(--secondary); }
+
+        /* ===== TABLEAU DE COMPÉTENCES ===== */
+        .competences-table-wrapper {
+            overflow-x: visible;
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+            width: 100%;
+        }
+
+        .competences-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--glass);
+            font-size: 0.82rem;
+            font-family: 'Inter', sans-serif;
+            table-layout: fixed;
+        }
+
+        .competences-table thead tr th {
+            background: #1e293b;
+            color: #fff;
+            padding: 11px 7px;
+            text-align: center;
+            border: 1px solid rgba(99, 102, 241, 0.4);
+            font-weight: 700;
+            vertical-align: middle;
+            line-height: 1.3;
+            word-break: break-word;
+        }
+
+        .competences-table thead tr th:first-child {
+            text-align: left;
+            padding-left: 8px;
+            width: 14%;
+        }
+
+        .competences-table thead tr th:nth-child(2) { width: 9%; }
+        .competences-table thead tr th:nth-child(3) { width: 9%; }
+        .competences-table thead tr th:nth-child(4) { width: 12%; }
+        .competences-table thead tr th:nth-child(5) { width: 10%; }
+        .competences-table thead tr th:nth-child(6) { width: 9%; }
+        .competences-table thead tr th:nth-child(7) { width: 12%; }
+        .competences-table thead tr th:nth-child(8) { width: 11%; }
+        .competences-table thead tr th:nth-child(9) { width: 14%; }
+
+        .competences-table tbody td {
+            padding: 11px 7px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            text-align: center;
+            vertical-align: middle;
+            color: #1e293b;
+            background: rgba(255,255,255,0.95);
+            word-break: break-word;
+        }
+
+        .competences-table tbody td:first-child {
+            text-align: left;
+            padding-left: 8px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .competences-table tbody td:nth-child(2) {
+            color: #64748b;
+            font-size: 0.75rem;
+        }
+
+        .category-row td {
+            background: #f1f5f9 !important;
+            color: #475569 !important;
+            font-weight: 700 !important;
+            text-align: center !important;
+            padding: 9px 7px !important;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .check-icon {
+            color: #6366f1;
+            font-size: 0.9rem;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 0.72rem;
+            font-family: 'Source Code Pro', monospace;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 2px 0;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+        .btn-link:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .btn-link.pdf {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+        .btn-link.pdf:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .links-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .competences-table tbody tr:hover td {
+            background: rgba(99, 102, 241, 0.05) !important;
+        }
+        .category-row:hover td {
+            background: #f1f5f9 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+
+    <nav>
+        <div class="logo" onclick="window.scrollTo(0,0)">ILIES<span>.IDBAIA</span></div>
+        <ul class="nav-links">
+            <li><a href="#accueil" class="nav-btn">Accueil</a></li>
+            <li><a href="#btssio" class="nav-btn">BTS SIO</a></li>
+            <li><a href="#parcours" class="nav-btn">Parcours</a></li>
+            <li><a href="#stages" class="nav-btn">Stages</a></li>
+            <li><a href="#competences" class="nav-btn">Compétences</a></li>
+            <li><a href="#projets" class="nav-btn">Projets</a></li>
+            <li><a href="#certifs" class="nav-btn">Certifications</a></li>
+            <li><a href="#veille" class="nav-btn">Veille</a></li>
+            <li><a href="#contact" class="nav-btn">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="accueil" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white;">
+        <h1 style="font-size: 4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Source Code Pro', monospace;">Ilies Idbaia</h1>
+        <p style="font-size: 1.5rem; opacity: 0.9; font-weight: 600; color: var(--primary); font-family: 'Source Code Pro', monospace;">{ Étudiant : BTS_SIO_SLAM }</p>
+        <a href="CVPortfolio.pdf" class="btn-cv" target="_blank">
+            <i class="fas fa-file-code" style="margin-right: 10px;"></i>GET_CV.exe
+        </a>
+    </section>
+
+    <section id="apropos">
+        <h2>À propos de moi</h2>
+        <div class="card">
+            <p>Je suis étudiant en <strong>2ème année de BTS SIO</strong>, passionné par l'informatique sous toutes ses formes. Cette formation m'a permis de développer des compétences en <strong>développement logiciel et web</strong>, et d'acquérir une vision concrète du monde professionnel de l'IT.</p>
+            <p style="margin-top: 15px;">Je suis particulièrement attiré par la <strong style="color: var(--primary);">cybersécurité</strong>, un domaine qui me passionne et dans lequel je souhaite approfondir mes connaissances et m'orienter à l'avenir.</p>
+        </div>
+    </section>
+
+    <section id="btssio">
+        <h2>Le BTS SIO</h2>
+        <div class="card">
+            <p style="margin-bottom: 20px;">Le <strong>BTS SIO (Services Informatiques aux Organisations)</strong> est un diplôme d'État formant aux métiers de la gestion d'un parc informatique ou du développement d'applications. Il répond aux besoins de transformation numérique des entreprises.</p>
+            <div class="grid-list">
+                <div class="grid-item">
+                    <strong style="color: var(--primary);"><i class="fas fa-code"></i> Option SLAM</strong>
+                    <strong>Solutions Logicielles et Applications Métiers</strong>
+                    L'option SLAM s'adresse aux étudiants qui souhaitent s'orienter vers les métiers du développement. Elle forme à la conception, à l'écriture et à la maintenance de logiciels, de sites web et d'applications mobiles.
+                </div>
+                <div class="grid-item">
+                    <strong style="color: var(--secondary);"><i class="fas fa-network-wired"></i> Option SISR</strong>
+                    <strong>Solutions d'Infrastructure, Systèmes et Réseaux</strong>
+                    L'option SISR est destinée à ceux qui préfèrent l'administration des réseaux et des serveurs. Elle forme à l'installation, à la sécurisation et à la maintenance des infrastructures informatiques.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="parcours">
+        <h2>Parcours Académique</h2>
+
+        <div class="card" style="border-left: 10px solid var(--secondary);">
+            <div class="school-info">
+                <div>
+                    <span class="school-title">🏫 Baccalauréat STI2D</span>
+                    <p>Sciences et Technologies de l'Industrie et du Développement Durable</p>
+                    <p><strong>Spécialité : Énergie-Environnement</strong> au Raincy, France</p>
+                </div>
+                <span class="badge">Obtenu en Juillet 2023</span>
+            </div>
+            <p><strong>Matières :</strong> Énergie & Env, Mathématiques, Physique-Chimie, Anglais, Espagnol, Philosophie.</p>
+        </div>
+        
+        <div class="card" style="border-left: 10px solid #1a1a1a;">
+            <div class="school-info">
+                <div>
+                    <span class="school-title">💻 EPITECH Paris - Programme Grande École</span>
+                    <p>Immersion intensive en développement C & Administration Système</p>
+                </div>
+                <span class="badge">2023 - 2024</span>
+            </div>
+            <div class="grid-list">
+                <div class="grid-item"><strong>My_Printf</strong>Recodage complet de la fonction printf du système C.</div>
+                <div class="grid-item"><strong>My_Radar (CSFML)</strong>Développement d'un jeu d'avion (esquive de radars et collisions).</div>
+                <div class="grid-item"><strong>My_Hunter</strong>Jeu 2D de tir sur pigeons (système de vitesse progressive).</div>
+                <div class="grid-item"><strong>Arch Linux</strong>Installation manuelle et configuration complète de l'OS.</div>
+                <div class="grid-item"><strong>Algorithmique</strong>Implémentation du jeu Pong sur Terminal.</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="school-info">
+                <div>
+                    <span class="school-title">🎓 BTS SIO - École Informatique IRIS Paris</span>
+                    <p>Solutions Logicielles et Applications Métiers (SLAM)</p>
+                </div>
+                <span class="badge">2024 - 2026 (En cours)</span>
+            </div>
+            <div class="grid-list">
+                <div class="grid-item"><strong>Développement Web</strong>PHP, HTML5, CSS3, JavaScript (ES6+), Java </div>
+                <div class="grid-item"><strong>Bases de Données</strong>Modélisation MCD/MLD et langage SQL</div>
+                <div class="grid-item"><strong>Développement Mobile</strong>Conception d'applications Android</div>
+                <div class="grid-item"><strong>Cybersécurité</strong>Sécurisation du code et des accès</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="stages">
+        <h2>Stages Professionnels</h2>
+        <div class="card">
+            <h3 style="color:var(--primary); margin-bottom: 10px;">OPCO Mobilités (2025-2026)</h3>
+            <p>Support IT, gestion de parc, analyse de sécurité et initiation aux Pentests.</p>
+        </div>
+        <div class="card">
+            <h3 style="color:var(--primary); margin-bottom: 10px;">GHU Hôpital Psychiatrique (2024-2025)</h3>
+            <p>Maintenance hardware, masterisation et support technique de proximité via GLPI.</p>
+        </div>
+    </section>
+
+    <section id="competences">
+        <h2>Compétences</h2>
+
+        <!-- Langages -->
+        <div class="card">
+            <h3 style="color: var(--primary); font-family: 'Source Code Pro', monospace; margin-bottom: 20px;"><i class="fas fa-code" style="margin-right: 8px;"></i>Langages de programmation</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="html.jpg" width="50" height="50" alt="HTML5" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">HTML5</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="css.jpg" width="50" height="50" alt="CSS3" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">CSS3</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="php.jpg" width="50" height="50" alt="PHP" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">PHP</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="javascript.jpg" width="50" height="50" alt="JavaScript" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">JavaScript</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" width="50" height="50" alt="Java" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">Java</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="python.jpg" width="50" height="50" alt="Python" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">Python</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="mysql.jpg" width="50" height="50" alt="MySQL" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">MySQL</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="C.jpg" width="50" height="50" alt="C" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">C</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Outils -->
+        <div class="card">
+            <h3 style="color: var(--primary); font-family: 'Source Code Pro', monospace; margin-bottom: 20px;"><i class="fas fa-tools" style="margin-right: 8px;"></i>Outils & Logiciels</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="wamp.jpg" width="50" height="50" alt="WAMP" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">WampServer</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="vscode.jpg" width="50" height="50" alt="VSCode" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">VS Code</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="sublimetext.jpg" width="50" height="50" alt="Sublime Text" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">Sublime Text</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Systèmes d'exploitation -->
+        <div class="card">
+            <h3 style="color: var(--primary); font-family: 'Source Code Pro', monospace; margin-bottom: 20px;"><i class="fas fa-desktop" style="margin-right: 8px;"></i>Systèmes d'exploitation</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="linux.jpg" width="50" height="50" alt="Linux" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">Linux</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="debian.jpg" width="50" height="50" alt="Debian" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">Debian</span>
+                </div>
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                    <img src="window.jpg" width="50" height="50" alt="Windows" style="object-fit: contain;"/>
+                    <span style="font-family: 'Source Code Pro', monospace; font-size: 0.8rem; font-weight: 700;">Windows</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===================== SECTION PROJETS ===================== -->
+    <section id="projets">
+        <h2>Projets</h2>
+
+        <div style="text-align:center; margin-bottom: 2rem;">
+            <h3 style="color:#fff; font-family:'Source Code Pro',monospace; font-size:1.3rem; font-weight:700;">Tableau de Compétences Professionnelles</h3>
+        </div>
+
+        <div class="competences-table-wrapper">
+            <table class="competences-table">
+                <thead>
+                    <tr>
+                        <th>Compétences<br>mises en œuvre</th>
+                        <th>Période du<br>JJ/MM/AA<br>au JJ/MM/AA</th>
+                        <th>Gérer le<br>patrimoine<br>informatique</th>
+                        <th>Répondre aux<br>incidents et aux<br>demandes<br>d'assistance et<br>d'évolution</th>
+                        <th>Développer la<br>présence en<br>ligne de<br>l'organisation</th>
+                        <th>Travailler<br>en mode<br>projet</th>
+                        <th>Mettre à<br>disposition des<br>utilisateurs un<br>service<br>informatique</th>
+                        <th>Organiser son<br>développement<br>professionnel</th>
+                        <th>Liens</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- Catégorie : Projets professionnels en stage -->
+                    <tr class="category-row">
+                        <td colspan="9">📁 PROJETS PROFESSIONNELS EN STAGE</td>
+                    </tr>
+
+                    <!-- Audio Transcription -->
+                    <tr>
+                        <td>GLPI</td>
+                        <td>06/06/25<br>→ 25/06/25<br>puis<br>15/11/25<br>→ 30/11/25</td>
+                        <td></td>
+                        <td></i><i class="fas fa-check check-icon"></i></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <!-- Analyse de Mention Légale -->
+                    <tr>
+                        <td>Désactivation compte : ajout d'une fonctionnalité</td>
+                        <td>25/06/25<br>→ 07/07/25</td>
+                        <td></td>
+                        <td></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td></td>
+                    </tr>
+                    <!-- Catégorie : Projets scolaires -->
+                    <tr class="category-row">
+                        <td colspan="9">🎒 PROJETS SCOLAIRES</td>
+                    </tr>
+
+                    <!-- E-Students -->
+                    <tr>
+                        <td>E-Students</td>
+                        <td>15/10/25<br>→ 10/11/25</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td>
+                            <div class="links-cell">
+                                <a href="https://github.com/Yrax/E-Students" target="_blank" class="btn-link"><i class="fab fa-github"></i> GITHUB</a>
+                                <a href="https://yacine-bourennane-portfolio.netlify.app/pdf/E-Students.pdf" target="_blank" class="btn-link pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Site Orange -->
+                    <tr>
+                        <td>Site Orange</td>
+                        <td>10/11/25<br>→ 15/11/25</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="links-cell">
+                                <a href="https://github.com/Yrax/Site-Orange" target="_blank" class="btn-link"><i class="fab fa-github"></i> GITHUB</a>
+                                <a href="https://yacine-bourennane-portfolio.netlify.app/pdf/Orange_Oral.pdf" target="_blank" class="btn-link pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Snake -->
+                    <tr>
+                        <td>Snake</td>
+                        <td>02/02/26<br>→ 09/02/26</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="links-cell">
+                                <a href="https://github.com/Yrax/Snake" target="_blank" class="btn-link"><i class="fab fa-github"></i> GITHUB</a>
+                                <a href="https://yacine-bourennane-portfolio.netlify.app/pdf/Snake_En_C.pdf" target="_blank" class="btn-link pdf"><i class="fas fa-file-pdf"></i> PDF</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-- ============================================================ -->
+
+    <section id="certifs">
+        <h2>Certifications</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px;">
+
+            <!-- ANSSI -->
+            <div class="card" style="text-align: center; min-height: 220px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <i class="fas fa-user-shield" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
+                <h3>ANSSI – SecNumacadémie</h3>
+                <p>Expertise en Cybersécurité • <strong>Score : 100%</strong></p>
+                <a href="Certif_ANSSI.pdf" target="_blank" style="color: var(--secondary); font-weight: 700; text-decoration: none; margin-top: 10px;">Afficher le diplôme</a>
+            </div>
+
+            <!-- CNIL RGPD -->
+            <div class="card" style="display: flex; flex-direction: column; align-items: center; padding: 2rem;">
+                <i class="fas fa-shield-alt" style="font-size: 2.5rem; color: var(--primary); margin-bottom: 10px;"></i>
+                <h3 style="margin-bottom: 6px; text-align: center;">CNIL – L'Atelier RGPD</h3>
+                <p style="text-align: center; margin-bottom: 20px;">Protection des données personnelles • <strong>6 modules complétés</strong></p>
+
+                <div style="width: 100%;">
+                    <a href="1.pdf" target="_blank" class="module-row">
+                        <span class="module-row-label"><i class="fas fa-file-pdf"></i>Module 1 : Le RGPD et ses notions clés</span>
+                        <span class="module-score score-100">100%</span>
+                    </a>
+                    <a href="2.pdf" target="_blank" class="module-row">
+                        <span class="module-row-label"><i class="fas fa-file-pdf"></i>Module 2 : Les principes de la protection des données</span>
+                        <span class="module-score score-97">97%</span>
+                    </a>
+                    <a href="3.pdf" target="_blank" class="module-row">
+                        <span class="module-row-label"><i class="fas fa-file-pdf"></i>Module 3 : Les responsabilités des acteurs</span>
+                        <span class="module-score score-100">100%</span>
+                    </a>
+                    <a href="4.pdf" target="_blank" class="module-row">
+                        <span class="module-row-label"><i class="fas fa-file-pdf"></i>Module 4 : Le DPO et les outils de la conformité</span>
+                        <span class="module-score score-93">93%</span>
+                    </a>
+                    <a href="5.pdf" target="_blank" class="module-row">
+                        <span class="module-row-label"><i class="fas fa-file-pdf"></i>Module 5 : Les collectivités territoriales</span>
+                        <span class="module-score score-93">93%</span>
+                    </a>
+                    <a href="6.pdf" target="_blank" class="module-row">
+                        <span class="module-row-label"><i class="fas fa-file-pdf"></i>Module 6 : Travail et données personnelles</span>
+                        <span class="module-score score-97">97%</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="veille">
+        <h2>Veille Technologique</h2>
+        <div class="card">
+            <h3 style="color:var(--primary); margin-bottom: 15px;">🔍 Une veille technologique c'est quoi ?</h3>
+            <p>La veille technologique est une activité organisée et continue qui consiste à surveiller les innovations, les nouvelles techniques et les évolutions du marché dans un secteur précis (comme l'informatique ou le développement).</p>
+            <br>
+            <h3 style="color:var(--primary); margin-bottom: 15px;">🔨 Sujet 1 : L'impacte de l'IA sur le métier de juriste</h3>
+            <p style="margin-bottom: 15px;">J'ai choisi ce thème car, en tant que techniciens informatiques, nous devons comprendre comment le droit encadre nos pratiques, notamment l'usage de l'intelligence artificielle. Il s'agit toutefois d'une relation réciproque : si le droit régit la technologie, l'IA transforme aujourd'hui profondément les métiers du droit. </p>
+            <a href="https://www.cnb.avocat.fr" class="btn-cv" target="_blank" style="margin-top: 0; margin-bottom: 30px;">
+                <i class="fas fa-external-link-alt" style="margin-right: 10px;"></i>Lire l'article
+            </a>
+            
+            <h3 style="color:var(--primary); margin-bottom: 15px;">🔌 Sujet 2 : Objets connecté, risque et donnée sensibles(IoT)</h3>
+            <p style="margin-bottom: 15px;">L'IoT est une innovation majeur de l'informatique moderne. Lorsqu'on parle d'innovation on parle nécessairement d'enjeux avec des retombées positif et négatif q'uil faut chercher à maitriser. Les objets connectés sont simples d'utilisation mais les enjeux derriere sont important (par rapport à nos données personnelle et sensible)</p>
+            <a href="https://www.cybermalveillance.gouv.fr/tous-nos-contenus/bonnes-pratiques/securite-objets-connectes-iot" class="btn-cv" target="_blank" style="margin-top: 0; margin-bottom: 30px;">
+                <i class="fas fa-external-link-alt" style="margin-right: 10px;"></i>Lire l'article
+            </a>
+
+            <div class="grid-list">
+                <div class="grid-item"><strong>Outils utilisés</strong>Feedly, Google News, Netvibes</div>
+                <div class="grid-item"><strong>Objectif</strong>Anticiper les évolutions technologiques et les nouveaux protocoles de sécurité.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Me Contacter</h2>
+        <div class="contact-container">
+            <div class="card contact-card">
+                <h3>Coordonnées</h3>
+                <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> ilies.idbaia@mediaschool.eu</p>
+                <p><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Bondy, France</p>
+                <p><i class="fab fa-linkedin" style="margin-right: 10px;"></i> LinkedIn : Ilies Idbaia</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; font-family: 'Source Code Pro', monospace;">Ilies Idbaia</p>
+        <p>Email professionnel : ilies.idbaia@mediaschool.eu</p>
+        <div style="margin-top: 20px; opacity: 0.5;">
+            <p>© 2026 Portfolio personnel - BTS SIO SLAM</p>
+        </div>
+    </footer>
+
+</body>
+</html>
